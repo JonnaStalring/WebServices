@@ -50,7 +50,7 @@ if __name__ == "__main__":
     #testUrllib2()
     #smiles = "C#N"
     #ID = "Cyanide"
-    smiles = "CC1=C(C=CC2=C1N=C(C=C2OC3CC4C(C3)C(=O)N(CCCCC=CC5CC5(NC4=O)C(=O)NS(=O)(=O)C6CC6)C)C7=NC(=CS7)C(C)C)OC"
+    smiles = "CC1=C"
     ID = "Simeprevir"
     #smiles = "CCO"
     #ID = "Ethanol"
