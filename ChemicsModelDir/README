@@ -1,0 +1,26 @@
+Model directory structure for Chemics models requiering data saved on disk.
+
+The root directory (CHEMICSMODELDIR) contains one directory for each endpoint and the endpoint directory can contain a hierachy of global and local models. 
+The local model directory may contain project and series specific models as displayed below. 
+
+CHEMICSMODELDIR
+	|
+	|
+	---------Endpoint
+			|
+			|	
+			---------global
+			|
+			---------local
+				  |
+                                  |
+                                  -------projectX
+                                            |
+                                            ----Series1
+                                            
+It is assumed that for each existing model there is predict.py method at the apropriate level in the hierachy. 
+Fore example, a series 1 specific model of potency for the RSV project would be located in the sub-directory:
+CHEMICSMODELDIR/Potency/local/RSV_FUSION_INHIBITOR/Series1/predict.py
+
+The predict methods take the smiles, ID and the path to the directory in which predict.py resides as an input and returns a prediction and a confidence. 
+
