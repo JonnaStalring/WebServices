@@ -18,7 +18,7 @@ class TestChemics(unittest.TestCase):
         endpoint = "logP"
         #endpoint = "TPSA"
         #endpoint = "AllAPendpoints"
-        smiles = "CC1=C(C=CC2=C1N=C(C=C2OC3CC4C(C3)C(=O)N(CCCCC=CC5CC5(NC4=O)C(=O)NS(=O)(=O)C6CC6)C)C7=NC(=CS7)C(C)C)OC"
+        smiles = "CC1=C(C=CC2=C1N=C"
         smiles = urllib.quote(smiles)
         url = 'http://'+MYSERVER+'/prediction/'+endpoint+'/123/'+smiles+'/DummyProject/DummySeries'
         print url
@@ -109,30 +109,6 @@ class TestChemics(unittest.TestCase):
         self.assertEqual("Thiophene", pred)
 
 
-
-    def hidetestMVdbBatch(self):
-        MVlist = ["MV080290", "MV080291"]
-        url = 'http://semssr-rnd01/MVDBWS/MVDBStructures.svc/compounds'
-        smilesDict = {"MVNumberArray":MVlist}
-        myData = json.dumps(smilesDict)
-        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-        response = requests.post(url, data=myData, headers = headers)
-        molList = json.loads(response.text)
-        print molList
-        smiles = molList[1]["SMILES"]
-        self.assertEqual("[C@H]12[C@]([C@@H](O[C@@H]1COP(O2)(OC(C)C)=O)N1\C=C/C(NC1=O)=O)(N)C.CC(=O)O", smiles)
-
-
-    def hidetestMVdbSingel(self):
-        ID = "MV080290"
-        url = 'http://semssr-rnd01/MVDBWS/MVDBStructures/'+ID+'?format=smiles'
-        response = requests.get(url)
-        smiles = json.loads(response.text)
-        smiles = urllib.unquote(str(smiles))
-        #self.assertEqual("[C@H]12[C@]([C@@H](O[C@@H]1COP(O2)(OC(C)C)=O)N1\C=C/C(NC1=O)=O)(N)C.CC(=O)O", smiles)
-        self.assertEqual("c1c(ccc(c1)S(NC(NCCCC)=O)(=O)=O)C", smiles)
-
-
     def hidetestMultipleMVAllAP(self):
         #endpoint = "logP"
         #endpoint = "TPSA"
@@ -196,7 +172,7 @@ class TestChemics(unittest.TestCase):
 
 
     def hidetestSingleAsync(self):
-        smiles = "CC1=C(C=CC2=C1N=C(C=C2OC3CC4C(C3)C(=O)N(CCCCC=CC5CC5(NC4=O)C(=O)NS(=O)(=O)C6CC6)C)C7=NC(=CS7)C(C)C)OC"
+        smiles = "CC1=C"
         TIMEOUT = 50
         endpoint = "logP"
         result = self.startJob(smiles, endpoint)
@@ -268,7 +244,7 @@ class TestChemics(unittest.TestCase):
     
 
     def hidetestAllAPEP(self):
-        smiles = "CC1=C(C=CC2=C1N=C(C=C2OC3CC4C(C3)C(=O)N(CCCCC=CC5CC5(NC4=O)C(=O)NS(=O)(=O)C6CC6)C)C7=NC(=CS7)C(C)C)OC"
+        smiles = "CC1=C"
         APendpoints = ["logP", "logD", "MDCK", "Peff", "Sp", "RuleOf5", "RuleOf3", "Acidic_pKa", "Acidic_pKa_74prox", "Basic_pKa", \
                        "Basic_pKa_74prox", "Mixed_pKa", "Mixed_pKa_74prox"]
         smiles = urllib.quote(smiles)
