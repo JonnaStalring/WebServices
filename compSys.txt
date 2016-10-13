@@ -1,0 +1,98 @@
+Find installed packages:
+=======================
+yum list gcc
+
+
+
+Web service 
+=============
+Starting the WS in production mode redirecting stdout and stderr to a file:
+./startWSprod.sh >& ACCESSLOG.txt &
+
+
+git
+=====
+Set up a new local repo (ChemicsEndpoints should not exist):
+git init --bare ChemicsEndpoints
+
+git clone <pathToChemicsEndpointsDir>
+Add code and commit!
+
+Local repo in ~/local/ChemicsWS
+
+To check in:
+git commit ...
+git push (origin master )
+
+git tag -a v0.1 -m "First version of Chemics"
+git push --tags  or  git push origin v0.97 
+
+
+
+ADMET predictor
+================
+Note: 32 bit version only. Libraries currently only installed on thor!
+
+./lmgrd -> cmd not found, probably trying to execute a 32 bit binary. Install required 32 bit packages.  
+
+Check version:
+[ADMET_Predictor_v71]$ file lmgrd
+lmgrd: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically
+linked (uses shared libs), for GNU/Linux 2.6.9, stripped
+[ADMET_Predictor_v71]$
+
+Starting the license manager:
+setenv LM_LICENSE_FILE
+/disk1/jonsta/lib/ADMET_Predictor_v71/Medivir__Eval_Jul.lic
+./lmgrd
+
+Testing AP in temp/AP:
+#ADMET_Predictor_v71]$ ./RunAP.sh –t QMD –d 2D Demo2D.qmd
+#./RunAP.sh –d 2D -t SMI -y foo.smi
+#./RunAP.sh –t SMI –d 2D Demo2D.smi # OBS this order of the arguments does not work. Actually now it does!
+#./RunAP.sh -t SMI -y small_dos.smi
+
+Unstable execution, the following seem to work though:
+./RunAP.sh -t SMI Demo2D.smi
+./RunAP.sh -d 2D -t SDF Demo3D.sdf
+Sdf always work!
+
+Before we had it working we set the variable:
+setenv ADMET_PREDICTOR_PATH /disk1/jonsta/lib/ADMET_Predictor_v71/ 
+
+
+
+ChemAxon:
+=========
+module load cheminfo
+msketch
+standardize
+cxcalc
+cxcalc GVKsolubility.sdf -i 'MV Number' logs -H 7.4 -U mol/l > ChemAxonPred7.4M.txt
+
+
+Orange3 virtual environment:
+============================
+source /disk1/jonsta/projects/ConfPred/dev/orange3env/bin/activate.csh
+setenv PYTHONPATH /disk1/jonsta/projects/ConfPred/dev/conformal-master
+
+
+To install Orange3:
+/disk1/jonsta/projects/ConfPred/dev/setup-centos.sh
+
+
+Mold2:
+Add ~/bin to path
+Mold2 -i fileName.sdf -o fileName.txt
+
+
+SMARTcyp
+java -jar ~/bin/smartcyp.jar -outputdir SMARTcyp RSV.smi
+
+
+TEST
+./disk1/jonsta/lib/TEST4_2/TEST
+
+
+Dragon
+/disk1/jonsta/lib/Dragon/dragon7gui
