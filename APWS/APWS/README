@@ -1,0 +1,10 @@
+2015/10/01
+Runs only with 32 bit libraries. These are currently only on thor.
+
+Start the AP license on thor in disk1/jonsta/lib/ADMET_Predictor_v71/
+setenv LM_LICENSE_FILE /disk1/jonsta/lib/ADMET_Predictor_v71/LicenseFile.lic
+nohup ./lmgrd > & LMGRDlog.txt &
+
+To start WS in production
+nohup ./startAP.sh >& ACCESSLOG.txt &
+
