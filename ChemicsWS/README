@@ -1,0 +1,69 @@
+********************************************************************************************
+*                             README
+*
+*                      Readme file for ChemicsWS 
+*                      2015/06/18
+*                      Jonna Stalring & Kevin Parkes
+********************************************************************************************
+
+This is the code framework for the Chemics REST web service, ChemicsWS.
+
+ChemicsWS depends on the software packages ChemicsEndpoints and AZOrange, as well as on models and datasets stored in the ChemicsModelDir.
+
+Hence, ChemicsWS  will use code from 3 different repositories:
+ChemicsWS - local git repo: /disk1/jonsta/local/ChemicsWS
+ChemicsEndpoints -local git repo /disk1/jonsta/local/ChemicsEndpoints
+AZOrange - git repo on github https://github.com/JonnaStalring/AZOrange
+
+ChemicsWS is assumed to be installed in a directory CHEMICSROOTPATH, within which also the ChemicsModelDir and ChemicsEndpoints directories are assumed to reside. 
+
+ChemicsWS contains the code for the web service interface itself, while ChemicsEndpoints contains code which defines the available endpoints and how they are calculated. 
+
+ChemicsModelDir is a directory structure containing models and data which have to be saved on disk. 
+
+
+File structure relative to CHEMICSROOTPATH:
+
+CHEMICSROOTPATH
+	|
+	|
+
+	ChemicsModelDir		Directory structure for models and data sets that need to be saved on disk
+        ChemicsEndpoints	The Endpoints directory contains one directory for each endpoint with code defining how the endpoint is calculated
+	ChemicsWS
+   		|
+   		|
+		ChemicsWS
+			|
+			|                
+          		    -------- ChemicsWS.py  Exposes the URLs made available by the WS
+          		    -------- startWS.sh    Use this script to start the WS and to get the correct environment. Dependence on AZO.
+
+
+URLs:
+=====
+
+Please use the following URL for a complete list of available methods and their api:
+ROOTURL/api/help 
+
+Example URLs:
+ROOTURL/endpoints 						Returns all available endpoints as defined by the directories in ChemicsEndpoints
+ROOTURL/prediction/?endpoint/?ID/?smiles/?project/?series 	Returns a prediction and a confidence for endpoint	
+
+Please note that special characters in the smiles string are assumed to be urlencoded!
+
+project - should be an established project name in MVDB (Blanks are replaced by _ in the ChemicsModelDir file structure). If "None" the global model is used. 
+series  - should be an integer or the string "None". If "None" the project specific model will be used.
+
+
+
+
+Addition of new endpoints:
+==========================
+
+Addition of an endpoint does not require any changes of the ChemicsWS code, because the API of all endpoint methods is standardized to 5 input strings and 2 output strings. 
+Input: endpoint, ID, smiles, project and series 
+Ouput: prediction , confidence
+The arguments can be dummy strings.  
+
+However, a new endpoint has to be added to the ChemicsEndpoints repository within the Endpoints directory, which contains one directory for each endpoint. The endpoint directory should contain a python module, predict$endpoint.py, which consists of a method, $endpoint, with the API defined above. Please see existing endpoints within ChemicsEndpoints as an example. 
