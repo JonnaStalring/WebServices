@@ -1,0 +1,13 @@
+
+*
+************* SERVER  INSTALL PROCESS FOR THE CHEMICS WEB SERVICE *********************
+*
+
+1) mkdir CHEMICSROOTDIR
+2) cd CHEMICSROOTDIR
+3) git archive --remote /disk1/jonsta/local/ChemicsWS --format tar master | tar xf -
+4) git archive --remote /disk1/jonsta/local/ChemicsEndpoints --format tar master | tar xf - -C ChemicsEndpoints
+5) rsync -a /disk1/jonsta/dev/Chemics/ChemicsModelDir 
+6) Modify the ChemicsWS/ChemicsWS/startWS.sh script to define correct CHEMICSROOTPATH, port and execution settings (arguments to python ChemicsWS.py)
+For production mode: ./startWS.sh $PORT  False True
+7) ./startWS.sh 

@@ -1,0 +1,13 @@
+Number of submitted molecules  1200
+Result from startBatch  6c2b5962-9242-4ac8-8597-613d6d6ad360 jobID1456310536
+status {u'jobStatus': u'Running'}
+Job not finished. Waiting 5 s
+status {u'jobStatus': u'Running'}
+Job not finished. Waiting 5 s
+status {u'jobStatus': u'Running'}
+Job not finished. Waiting 5 s
+Cancelling job
+http://192.168.100.27:8081/jobCancellation/6c2b5962-9242-4ac8-8597-613d6d6ad360/jobID1456310536
+{u'jobStatus': u'Job cancelled'}
+status  {u'jobStatus': u'No job with this ID'}
+{"APjobID": "jobID1456310536", "jobID": "6c2b5962-9242-4ac8-8597-613d6d6ad360"}

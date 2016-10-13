@@ -1,0 +1,855 @@
+http://192.168.100.27:8081/D360endpoints
+{
+  "endpoints": {
+    "displayname": "Chemics Service", 
+    "name": "Chemics Service", 
+    "outputProperties": null, 
+    "subFolders": [
+      {
+        "displayname": "General", 
+        "name": "General", 
+        "outputProperties": null, 
+        "subFolders": [
+          {
+            "display": true, 
+            "displayname": "SMILES_RDK12.12.1", 
+            "name": "SMILES", 
+            "outputProperties": [
+              {
+                "dataType": "string", 
+                "descriptorId": "prediction", 
+                "displayname": "SMILES_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status SMILES", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "MolWt_RDK12.12.1", 
+            "name": "MolWt", 
+            "outputProperties": [
+              {
+                "dataType": "float", 
+                "descriptorId": "prediction", 
+                "displayname": "MolWt_RDK12.12.1 (g/mol)", 
+                "selectedByDefault": true, 
+                "unit": "g/mol"
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status MolWt", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }
+        ], 
+        "type": "folder", 
+        "version": null
+      }, 
+      {
+        "displayname": "Counts", 
+        "name": "Counts", 
+        "outputProperties": null, 
+        "subFolders": [
+          {
+            "display": true, 
+            "displayname": "HeavyAtomCount_RDK12.12.1", 
+            "name": "HeavyAtomCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "HeavyAtomCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status HeavyAtomCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "BondCount_RDK12.12.1", 
+            "name": "BondCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "BondCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status BondCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "FluorineCount_RDK12.12.1", 
+            "name": "FluorineCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "FluorineCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status FluorineCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "HalogenCount_RDK12.12.1", 
+            "name": "HalogenCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "HalogenCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status HalogenCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "CarbonCount_RDK12.12.1", 
+            "name": "CarbonCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "CarbonCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status CarbonCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "PhosphorusCount_RDK12.12.1", 
+            "name": "PhosphorusCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "PhosphorusCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status PhosphorusCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "ChlorineCount_RDK12.12.1", 
+            "name": "ChlorineCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "ChlorineCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status ChlorineCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "OxygenCount_RDK12.12.1", 
+            "name": "OxygenCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "OxygenCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status OxygenCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "TPSA_RDK12.12.1", 
+            "name": "TPSA", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "TPSA_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status TPSA", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "HAcceptorsCount_RDK12.12.1", 
+            "name": "HAcceptorsCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "HAcceptorsCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status HAcceptorsCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "HDonorsCount_RDK12.12.1", 
+            "name": "HDonorsCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "HDonorsCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status HDonorsCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "RingCount_RDK12.12.1", 
+            "name": "RingCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "RingCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status RingCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "RotatableBondsCount_RDK12.12.1", 
+            "name": "RotatableBondsCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "RotatableBondsCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status RotatableBondsCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "NitrogenCount_RDK12.12.1", 
+            "name": "NitrogenCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "NitrogenCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status NitrogenCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "SulfurCount_RDK12.12.1", 
+            "name": "SulfurCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "SulfurCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status SulfurCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }, 
+          {
+            "display": true, 
+            "displayname": "AtomCount_RDK12.12.1", 
+            "name": "AtomCount", 
+            "outputProperties": [
+              {
+                "dataType": "int", 
+                "descriptorId": "prediction", 
+                "displayname": "AtomCount_RDK12.12.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status AtomCount", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "RDK12.12.1"
+          }
+        ], 
+        "type": "folder", 
+        "version": null
+      }, 
+      {
+        "displayname": "AllAPendpoints", 
+        "name": "AllAPendpoints", 
+        "outputProperties": null, 
+        "subFolders": [
+          {
+            "display": true, 
+            "displayname": "AllAPendpoints_AP7.1", 
+            "name": "AllAPendpoints", 
+            "outputProperties": [
+              {
+                "dataType": "string", 
+                "descriptorId": "prediction", 
+                "displayname": "AllAPendpoints_AP7.1", 
+                "selectedByDefault": true, 
+                "unit": null
+              }, 
+              {
+                "dataType": "string", 
+                "descriptorId": "descStatus", 
+                "displayname": "Calculation status AllAPendpoints", 
+                "selectedByDefault": true, 
+                "unit": null
+              }
+            ], 
+            "subFolders": null, 
+            "type": "task", 
+            "version": "AP7.1"
+          }
+        ], 
+        "type": "folder", 
+        "version": null
+      }, 
+      {
+        "displayname": "PhysChem", 
+        "name": "PhysChem", 
+        "outputProperties": null, 
+        "subFolders": [
+          {
+            "displayname": "Lipophilicity", 
+            "name": "Lipophilicity", 
+            "outputProperties": null, 
+            "subFolders": [
+              {
+                "display": false, 
+                "displayname": "logP_AP7.1", 
+                "name": "logP", 
+                "outputProperties": [
+                  {
+                    "dataType": "float", 
+                    "descriptorId": "prediction", 
+                    "displayname": "logP_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }, 
+                  {
+                    "dataType": "string", 
+                    "descriptorId": "confidence", 
+                    "displayname": "logP_AP7.1 Confidence", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }, 
+              {
+                "display": false, 
+                "displayname": "logD_AP7.1", 
+                "name": "logD", 
+                "outputProperties": [
+                  {
+                    "dataType": "float", 
+                    "descriptorId": "prediction", 
+                    "displayname": "logD_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }, 
+                  {
+                    "dataType": "string", 
+                    "descriptorId": "confidence", 
+                    "displayname": "logD_AP7.1 Confidence", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }
+            ], 
+            "type": "folder", 
+            "version": null
+          }, 
+          {
+            "displayname": "Solubility", 
+            "name": "Solubility", 
+            "outputProperties": null, 
+            "subFolders": [
+              {
+                "display": false, 
+                "displayname": "Sp_AP7.1", 
+                "name": "Sp", 
+                "outputProperties": [
+                  {
+                    "dataType": "float", 
+                    "descriptorId": "prediction", 
+                    "displayname": "Sp_AP7.1 (mg/mL)", 
+                    "selectedByDefault": true, 
+                    "unit": "mg/mL"
+                  }, 
+                  {
+                    "dataType": "string", 
+                    "descriptorId": "confidence", 
+                    "displayname": "Sp_AP7.1 Confidence", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }
+            ], 
+            "type": "folder", 
+            "version": null
+          }, 
+          {
+            "displayname": "pKa", 
+            "name": "pKa", 
+            "outputProperties": null, 
+            "subFolders": [
+              {
+                "display": false, 
+                "displayname": "Acidic_pKa_AP7.1", 
+                "name": "Acidic_pKa", 
+                "outputProperties": [
+                  {
+                    "dataType": "string", 
+                    "descriptorId": "prediction", 
+                    "displayname": "Acidic_pKa_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }, 
+              {
+                "display": false, 
+                "displayname": "Acidic_pKa_74prox_AP7.1", 
+                "name": "Acidic_pKa_74prox", 
+                "outputProperties": [
+                  {
+                    "dataType": "float", 
+                    "descriptorId": "prediction", 
+                    "displayname": "Acidic_pKa_74prox_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }, 
+              {
+                "display": false, 
+                "displayname": "Basic_pKa_AP7.1", 
+                "name": "Basic_pKa", 
+                "outputProperties": [
+                  {
+                    "dataType": "string", 
+                    "descriptorId": "prediction", 
+                    "displayname": "Basic_pKa_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }, 
+              {
+                "display": false, 
+                "displayname": "Basic_pKa_74prox_AP7.1", 
+                "name": "Basic_pKa_74prox", 
+                "outputProperties": [
+                  {
+                    "dataType": "float", 
+                    "descriptorId": "prediction", 
+                    "displayname": "Basic_pKa_74prox_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }, 
+              {
+                "display": false, 
+                "displayname": "Mixed_pKa_AP7.1", 
+                "name": "Mixed_pKa", 
+                "outputProperties": [
+                  {
+                    "dataType": "string", 
+                    "descriptorId": "prediction", 
+                    "displayname": "Mixed_pKa_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }, 
+              {
+                "display": false, 
+                "displayname": "Mixed_pKa_74prox_AP7.1", 
+                "name": "Mixed_pKa_74prox", 
+                "outputProperties": [
+                  {
+                    "dataType": "float", 
+                    "descriptorId": "prediction", 
+                    "displayname": "Mixed_pKa_74prox_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }, 
+              {
+                "display": false, 
+                "displayname": "pKa_mostBasic_AP7.1", 
+                "name": "pKa_mostBasic", 
+                "outputProperties": [
+                  {
+                    "dataType": "float", 
+                    "descriptorId": "prediction", 
+                    "displayname": "pKa_mostBasic_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }, 
+                  {
+                    "dataType": "string", 
+                    "descriptorId": "descStatus", 
+                    "displayname": "Calculation status AllAPendpoints", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }, 
+              {
+                "display": false, 
+                "displayname": "pKa_mostAcidic_AP7.1", 
+                "name": "pKa_mostAcidic", 
+                "outputProperties": [
+                  {
+                    "dataType": "float", 
+                    "descriptorId": "prediction", 
+                    "displayname": "pKa_mostAcidic_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }
+            ], 
+            "type": "folder", 
+            "version": null
+          }, 
+          {
+            "displayname": "Rules", 
+            "name": "Rules", 
+            "outputProperties": null, 
+            "subFolders": [
+              {
+                "display": false, 
+                "displayname": "RuleOf3_AP7.1", 
+                "name": "RuleOf3", 
+                "outputProperties": [
+                  {
+                    "dataType": "int", 
+                    "descriptorId": "prediction", 
+                    "displayname": "RuleOf3_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }, 
+              {
+                "display": false, 
+                "displayname": "RuleOf5_AP7.1", 
+                "name": "RuleOf5", 
+                "outputProperties": [
+                  {
+                    "dataType": "int", 
+                    "descriptorId": "prediction", 
+                    "displayname": "RuleOf5_AP7.1", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }
+            ], 
+            "type": "folder", 
+            "version": null
+          }
+        ], 
+        "type": "folder", 
+        "version": null
+      }, 
+      {
+        "displayname": "DMPK", 
+        "name": "DMPK", 
+        "outputProperties": null, 
+        "subFolders": [
+          {
+            "displayname": "Permeability", 
+            "name": "Permeability", 
+            "outputProperties": null, 
+            "subFolders": [
+              {
+                "display": false, 
+                "displayname": "MDCK_AP7.1", 
+                "name": "MDCK", 
+                "outputProperties": [
+                  {
+                    "dataType": "float", 
+                    "descriptorId": "prediction", 
+                    "displayname": "MDCK_AP7.1 (cm/s*10^7)", 
+                    "selectedByDefault": true, 
+                    "unit": "cm/s*10^7"
+                  }, 
+                  {
+                    "dataType": "string", 
+                    "descriptorId": "confidence", 
+                    "displayname": "MDCK_AP7.1 Confidence", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }, 
+              {
+                "display": false, 
+                "displayname": "Peff_AP7.1", 
+                "name": "Peff", 
+                "outputProperties": [
+                  {
+                    "dataType": "float", 
+                    "descriptorId": "prediction", 
+                    "displayname": "Peff_AP7.1 (cm/s*10^4)", 
+                    "selectedByDefault": true, 
+                    "unit": "cm/s*10^4"
+                  }, 
+                  {
+                    "dataType": "string", 
+                    "descriptorId": "confidence", 
+                    "displayname": "Peff_AP7.1 Confidence", 
+                    "selectedByDefault": true, 
+                    "unit": null
+                  }
+                ], 
+                "subFolders": null, 
+                "type": "task", 
+                "version": "AP7.1"
+              }
+            ], 
+            "type": "folder", 
+            "version": null
+          }
+        ], 
+        "type": "folder", 
+        "version": null
+      }
+    ], 
+    "type": "folder", 
+    "version": null
+  }
+}

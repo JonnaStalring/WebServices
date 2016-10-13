@@ -1,0 +1,20 @@
+http://192.168.100.27:8081/listAllAPendpoints
+{
+  "endpoints": [
+    "logP", 
+    "logD", 
+    "MDCK", 
+    "Peff", 
+    "RuleOf3", 
+    "RuleOf5", 
+    "Sp", 
+    "Acidic_pKa", 
+    "Acidic_pKa_74prox", 
+    "pKa_mostAcidic", 
+    "Basic_pKa", 
+    "Basic_pKa_74prox", 
+    "pKa_mostBasic", 
+    "Mixed_pKa", 
+    "Mixed_pKa_74prox"
+  ]
+}

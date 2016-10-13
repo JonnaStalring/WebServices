@@ -1,0 +1,159 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Code Snippet
+% LaTeX Template
+% Version 1.0 (14/2/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Velimir Gayevskiy (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+%----------------------------------------------------------------------------------------
+
+\usepackage{listings} % Required for inserting code snippets
+\usepackage[usenames,dvipsnames]{color} % Required for specifying custom colors and referring to colors by name
+
+\definecolor{DarkGreen}{rgb}{0.0,0.4,0.0} % Comment color
+\definecolor{highlight}{RGB}{255,251,204} % Code highlight color
+
+\lstdefinestyle{Style1}{ % Define a style for your code snippet, multiple definitions can be made if, for example, you wish to insert multiple code snippets using different programming languages into one document
+%language=Perl, % Detects keywords, comments, strings, functions, etc for the language specified
+language=Python, % Detects keywords, comments, strings, functions, etc for the language specified
+backgroundcolor=\color{highlight}, % Set the background color for the snippet - useful for highlighting
+basicstyle=\footnotesize\ttfamily, % The default font size and style of the code
+breakatwhitespace=false, % If true, only allows line breaks at white space
+breaklines=true, % Automatic line breaking (prevents code from protruding outside the box)
+captionpos=b, % Sets the caption position: b for bottom; t for top
+commentstyle=\usefont{T1}{pcr}{m}{sl}\color{DarkGreen}, % Style of comments within the code - dark green courier font
+deletekeywords={}, % If you want to delete any keywords from the current language separate them by commas
+%escapeinside={\%}, % This allows you to escape to LaTeX using the character in the bracket
+firstnumber=1, % Line numbers begin at line 1
+frame=single, % Frame around the code box, value can be: none, leftline, topline, bottomline, lines, single, shadowbox
+frameround=tttt, % Rounds the corners of the frame for the top left, top right, bottom left and bottom right positions
+keywordstyle=\color{Blue}\bf, % Functions are bold and blue
+morekeywords={}, % Add any functions no included by default here separated by commas
+numbers=left, % Location of line numbers, can take the values of: none, left, right
+numbersep=10pt, % Distance of line numbers from the code box
+numberstyle=\tiny\color{Gray}, % Style used for line numbers
+rulecolor=\color{black}, % Frame border color
+showstringspaces=false, % Don't put marks in string spaces
+showtabs=false, % Display tabs in the code as lines
+stepnumber=5, % The step distance between line numbers, i.e. how often will lines be numbered
+stringstyle=\color{Purple}, % Strings are purple
+tabsize=2, % Number of spaces per tab in the code
+}
+
+% Create a command to cleanly insert a snippet with the style above anywhere in the document
+\newcommand{\insertcode}[2]{\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1,style=Style1]{#1}\end{itemize}} % The first argument is the script location/filename and the second is a caption for the listing
+
+%----------------------------------------------------------------------------------------
+\title{The API of Chemics}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+\maketitle
+
+\section{Introduction}
+This document describes the API of Chemics by exemplifying with python code. 
+The usage of the API is illustrated by creating the required input objects, calling the URL and displaying the returned object. 
+All complex input objects, as well as all returned objects are of JSON format. 
+
+\subsection{\texttt{D360endpoints}}
+This method obtains a dictionary with the names of all endpoints exposed to D360, together with information about the corresponding unit and 
+the program used to predict the value of the endpoint. This object also controls the folder structure in D360. 
+The output of this method is in the Appendix because of its length. 
+
+\insertcode{"Scripts/D360endpoints.py"}{Calling the method returning information about all available endpoints.} % The first argument is the script location/filename and the second is a caption for the listing
+
+\subsection{\texttt{listAllAPendpoints}}
+The AllAPendpoints method uses a special mode of execution in Chemics and calculates multiple endpoints simultaneously whereas all 
+other endpoints are requested individually. This method defines the endpoints included in the AllAPendpoints endpoint. 
+
+\insertcode{"Scripts/listAllAPendpoints.py"}{List all endpoints predicted with the AllAPendpoints method.} % The first argument is the script location/filename and the second is a caption for the listing
+
+\insertcode{"Scripts/listAllAPendpoints.txt"}{Output of the \texttt{listAllAPendpoints} method.} % The first argument is the script location/filename and the second is a caption for the listing
+
+\subsection{\texttt{Prediction}}
+This method is used to obtain a prediction for a single molecule providing the smiles as an input. 
+Please note that url encoded smiles are assumed for both input and output objects. 
+
+\insertcode{"Scripts/testPrediction.py"}{Calling the \texttt{prediction} method.} % The first argument is the script location/filename and the second is a caption for the listing
+\insertcode{"Scripts/testPredictionResult.txt"}{Output of the \texttt{prediction} method.} % The first argument is the script location/filename and the second is a caption for the listing
+
+
+\subsection{\texttt{PredictionMV}}
+\texttt{PredictionMV} predicts a single molecule given an MV number. A prediction can be returned provided that the MV number is associated with a smiles in the corporate database.  
+
+\insertcode{"Scripts/testPredictionMV.py"}{Calling the \texttt{predictionMV} method.} % The first argument is the script location/filename and the second is a caption for the listing
+\insertcode{"Scripts/testPredictionMV.txt"}{Output of the \texttt{predictionMV} method.} % The first argument is the script location/filename and the second is a caption for the listing
+
+
+\subsection{\texttt{BatchPredictions}}
+\texttt{BatchPredictions} is used to obtain predictions for a batch of molecules providing the smiles. Please note that the input JSON object is constructed from a python list of dictionaries. 
+One of the provided smiles is intentionally wrong to show the output of a failed prediction. 
+
+\insertcode{"Scripts/testBatchPrediction.py"}{Calling the \texttt{batchPrediction} method.} % The first argument is the script location/filename and the second is a caption for the listing
+\insertcode{"Scripts/testBatchPrediction.txt"}{Output of the \texttt{batchPrediction} method.} % The first argument is the script location/filename and the second is a caption for the listing
+
+
+\subsection{\texttt{BatchPredictionsMV}}
+\texttt{BatchPredictionsMV} is used to obtain predictions for a batch of molecules providing the MV number. Please note that the input JSON object is constructed from a python list of dictionaries. The endpoint used in this example, AllAPendpoints, returns predictions from all ADMET Predictor endpoints that are exposed through Chemics. Because of the computational time, individual ADMET Predictor endpoints cannot be requested for more than 10 compounds. If predictions for a larger batch of molecules is required, the AllAPendpoints method should be used. This method returns predictions for all endpoints as displayed in Listing 9 and it is a fast route to ADMET Predictor predictions, which will prediction 3000 molecules in approximately 6 minutes. However, please note that the AllAPendpoints does not accept more than 1000 molecules. 
+
+\insertcode{"Scripts/testBatchPredictionMV.py"}{Calling the \texttt{batchPredictionMV} method.} % The first argument is the script location/filename and the second is a caption for the listing
+\insertcode{"Scripts/testBatchPredictionMV.txt"}{Output of the \texttt{batchPredictionMV} method.} % The first argument is the script location/filename and the second is a caption for the listing
+
+
+\subsection{Asynchronous execution}
+All four different methods of obtaining Chemics predictions, \texttt{predictions}, \texttt{predictionMV}, \texttt{batchPredictions} and \texttt{batchPredictionsMV}, have corresponding 
+asynchronous methods, as defined by the list below. 
+\begin{itemize}
+\item \texttt{startPrediction}
+\item \texttt{startPredictionMV}
+\item \texttt{startBatchPredictions}
+\item \texttt{startBatchPredictionsMV}
+\item \texttt{getStatus}
+\item \texttt{getPrediction}
+\item \texttt{getBatchPredictions}
+\item \texttt{jobCancellation}
+\end{itemize}
+The start methods return a job identifier, which can be used to check the status of the job with the 
+\texttt{getStatus} method. The list below shows the six types of return codes from the \texttt{getStatus} method and one of them is variable (\texttt{SPECIFIC ERROR MESSAGE}) 
+to proved the user with specific information about errors.
+\begin{itemize}
+\item \texttt{Queued}
+\item \texttt{Running}
+\item \texttt{Completed: All molecules predicted successfully}
+\item \texttt{Incomplete: Some molecules could not be predicted. Please see the 'Calculation status' column. In case of errors, please report to Helpdesk providing the information in this box (‘Copy Summary To Clipboard’).}
+\item \texttt{TASK FAILED: SPECIFIC ERROR MESSAGE + In case of errors, please report to Helpdesk providing the information in this box (‘Copy Summary To Clipboard’).}
+\item \texttt{No job with this ID}
+\end{itemize}
+Once the job is competed, as indicated by the "\texttt{Completed}" string being part of the return code, the results can be retrieved with the \texttt{getPrediction} or \texttt{getBatchPredictions} method.  The input and output 
+JSON objects are the same as for the synchronous methods. To avoid repetition, solely the execution of the asynchronous \texttt{batchPredictionsMV} method is illustrated below. 
+
+\insertcode{"Scripts/testAsyncBatchPredictionMV.py"}{Calling the asynchronous batch method to obtain predictions from MV numbers.} % The first argument is the script location/filename and the second is a caption for the listing
+\insertcode{"Scripts/testAsyncBatchPredictionMV.txt"}{Output of the asynchronous execution.} % The first argument is the script location/filename and the second is a caption for the listing
+
+\subsection{Asynchronous execution with job cancellation}
+If a large job was accidentally submitted it can be cancelled with the \texttt{jobCancellation} method. 
+The code in Listing 12 submits an asynchronous job requesting predictions 
+for all ADMET Predictor endpoints for 1000 compounds, but cancels the job after approximately 40 
+seconds. Please note that the startBatchPredictionsMV method returns also a APjobID that is required 
+as an input to \texttt{jobCancellation} to properly cancel an ADMET Predictor job. 
+
+\insertcode{"Scripts/testAsyncBatchPredictionMVCancellation.py"}{Calling the asynchronous batch method and cancelling the job after 40 seconds.} % The first argument is the script location/filename and the second is a caption for the listing
+\insertcode{"Scripts/testAsyncBatchPredictionMVCancellation.txt"}{Output of the asynchronous execution with job cancellation.} % The first argument is the script location/filename and the second is a caption for the listing
+
+\section{Appendix}
+\insertcode{"Scripts/D360endpoints.txt"}{Output of the D360endpoints method.} % The first argument is the script location/filename and the second is a caption for the listing
+%----------------------------------------------------------------------------------------
+
+\end{document}

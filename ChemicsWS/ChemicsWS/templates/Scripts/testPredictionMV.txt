@@ -1,0 +1,15 @@
+http://192.168.100.27:8081/predictionMV/TPSA/MV002863/DummyProject/DummySeries
+Response from single molecule execution
+{
+  "ID": "MV002863", 
+  "confidence": "NaN", 
+  "descEndpoint": "TPSA_RDK12.12.1", 
+  "descStatus": "Finished", 
+  "endpoint": "TPSA", 
+  "prediction": "122.74", 
+  "project": "DummyProject", 
+  "series": "DummySeries", 
+  "smiles": "N%5C1%28C%28/N%3DC%28%5CC%28%3DC1%29%5Cc1sccc1%29/N%29%3DO%29%5BC%40%40H%5D1O%5BC%40%40H%5D%28C%28C1%29OC%28%3DO%29c1ccccc1%29COC%28%3DO%29c1ccccc1", 
+  "status": "Finished", 
+  "unit": "Angstrom^2"
+}

@@ -1,0 +1,6 @@
+Aromatic_Amine c1ccccc1-[$([N+0])!$([N][C](-[N])=[N])!$([N][C](-[C])=[N])]
+Benzylamine c1ccccc1[CH2][NX3;!$(NC=[O,S,N]);!$(N[!#6])]
+Furan c1ccc[oX2]1
+Thiophene c1ccc[sX2]1
+2-Halopyrimidine n1c([Cl,Br,I,F])nccc1
+2-LG-Thiazole c1c[nX2]c([#16](-[NX3])(=[#8])=[#8])[sX2]1

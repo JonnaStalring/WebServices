@@ -1,0 +1,45 @@
+http://192.168.100.27:8081/batchPredictions/Basic_pKa
+Response from batch execution
+{
+  "batchResults": [
+    {
+      "ID": "Simeprevir", 
+      "confidence": null, 
+      "descEndpoint": "Basic_pKa_AP7.1", 
+      "descStatus": "ADMET Predictor unable to predict. Please check the smiles.", 
+      "endpoint": "Basic_pKa", 
+      "prediction": null, 
+      "project": "dummyProject", 
+      "series": "dummySeries", 
+      "smiles": "ACC1%3DC%28C%3DCC2%3DC1N%3DC%28C%3DC2OC3CC4C%28C3%29C%28%3DO%29N%28CCCCC%3DCC5CC5%28NC4%3DO%29C%28%3DO%29NS%28%3DO%29%28%3DO%29C6CC6%29C%29C7%3DNC%28%3DCS7%29C%28C%29C%29OC", 
+      "status": "Error", 
+      "unit": ""
+    }, 
+    {
+      "ID": "L-alanine", 
+      "confidence": "NaN", 
+      "descEndpoint": "Basic_pKa_AP7.1", 
+      "descStatus": "Finished", 
+      "endpoint": "Basic_pKa", 
+      "prediction": "  9.47", 
+      "project": "dummyProject", 
+      "series": "dummySeries", 
+      "smiles": "N%5BC%40%40H%5D%28C%29C%28%3DO%29O", 
+      "status": "Finished", 
+      "unit": ""
+    }, 
+    {
+      "ID": "Ibuprofen", 
+      "confidence": "NaN", 
+      "descEndpoint": "Basic_pKa_AP7.1", 
+      "descStatus": "Finished", 
+      "endpoint": "Basic_pKa", 
+      "prediction": "NaN", 
+      "project": "dummyProject", 
+      "series": "dummySeries", 
+      "smiles": "CC%28C%29CC1%3DCC%3DC%28C%3DC1%29C%28C%29C%28%3DO%29O", 
+      "status": "Finished", 
+      "unit": ""
+    }
+  ]
+}

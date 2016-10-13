@@ -1,0 +1,15 @@
+http://192.168.100.27:8081/prediction/logP/Ibuprofen/N%28C%28%3DS%29NCCc1ncccc1%29c1ncc%28cc1%29C/DummyProject/DummySeries
+Response from single molecule execution
+{
+  "ID": "Ibuprofen", 
+  "confidence": "inAD", 
+  "descEndpoint": "logP_AP7.1", 
+  "descStatus": "Finished", 
+  "endpoint": "logP", 
+  "prediction": "1.90021973067163", 
+  "project": "DummyProject", 
+  "series": "DummySeries", 
+  "smiles": "N%28C%28%3DS%29NCCc1ncccc1%29c1ncc%28cc1%29C", 
+  "status": "Finished", 
+  "unit": ""
+}
