@@ -5,9 +5,19 @@
 
 1) mkdir CHEMICSROOTDIR
 2) cd CHEMICSROOTDIR
-3) git archive --remote /disk1/jonsta/local/ChemicsWS --format tar master | tar xf -
-4) git archive --remote /disk1/jonsta/local/ChemicsEndpoints --format tar master | tar xf - -C ChemicsEndpoints
-5) rsync -a /disk1/jonsta/dev/Chemics/ChemicsModelDir 
+3) If the system does not have an appropriate python environment Anaconda could be used to create a special environment for the web service. 
+The following instructions are assuming installation using Anaconda. Download Anaconda and execute: bash Anaconda2-5.1.0-Linux-x86_64.sh
+4) Create flask environment under conda:
+src/anaconda2/bin/conda create -n my_flask_env python=2.7
+5) Activate the conda environment:
+bash
+source activate my_flask_env
+6) conda install pip
+7) pip install numpy
+pip install requests
+pip install flask
+pip install rq
+pip install redis
 6) Modify the ChemicsWS/ChemicsWS/startWS.sh script to define correct CHEMICSROOTPATH, port and execution settings (arguments to python ChemicsWS.py)
 For production mode: ./startWS.sh $PORT  False True
 7) ./startWS.sh 
