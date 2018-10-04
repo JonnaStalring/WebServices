@@ -15,6 +15,15 @@ ChemicsWS - local git repo: /disk1/jonsta/local/ChemicsWS
 ChemicsEndpoints -local git repo /disk1/jonsta/local/ChemicsEndpoints
 AZOrange - git repo on github https://github.com/JonnaStalring/AZOrange
 
+
+START CHEMICS IN DEBUG MODE
+===========================
+bash
+source activate my_flask_env
+cd WebServices/ChemicsWS/ChemicsWS/
+./startWS.sh
+
+
 ChemicsWS is assumed to be installed in a directory CHEMICSROOTPATH, within which also the ChemicsModelDir and ChemicsEndpoints directories are assumed to reside. 
 
 ChemicsWS contains the code for the web service interface itself, while ChemicsEndpoints contains code which defines the available endpoints and how they are calculated. 
@@ -67,3 +76,5 @@ Ouput: prediction , confidence
 The arguments can be dummy strings.  
 
 However, a new endpoint has to be added to the ChemicsEndpoints repository within the Endpoints directory, which contains one directory for each endpoint. The endpoint directory should contain a python module, predict$endpoint.py, which consists of a method, $endpoint, with the API defined above. Please see existing endpoints within ChemicsEndpoints as an example. 
+
+New endpoints also have to be added to the CONFIG.py file.
