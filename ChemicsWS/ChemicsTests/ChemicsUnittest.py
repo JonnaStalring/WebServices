@@ -6,7 +6,9 @@ import string
 import time
 import unittest
 
-MYSERVER = "chemics.medivir.com"
+#MYSERVER = "0.0.0.0:8081"
+MYSERVER = "10.247.2.96:8081"  # On Linux11
+#MYSERVER = "chemics.medivir.com"
 #MYSERVER = "chemics.medivir.com:8085" # Test
 #MYSERVER = "192.168.100.27:8081"
 #MYSERVER = "192.168.100.27:8085"
@@ -14,11 +16,11 @@ MYSERVER = "chemics.medivir.com"
 
 class TestChemics(unittest.TestCase):
 
-    def hidetestSingle(self):
-        endpoint = "logP"
-        #endpoint = "TPSA"
+    def hidetestSingleRDK(self):
+        #endpoint = "logP"
+        endpoint = "TPSA"
         #endpoint = "AllAPendpoints"
-        smiles = "CC1=C(C=CC2=C1N=C"
+        smiles = "OC1COc2ccccc2OCCOCCOc2ccccc2OC1"
         smiles = urllib.quote(smiles)
         url = 'http://'+MYSERVER+'/prediction/'+endpoint+'/123/'+smiles+'/DummyProject/DummySeries'
         print url
@@ -27,9 +29,25 @@ class TestChemics(unittest.TestCase):
         print response.text
         respDict = json.loads(response.text)
         pred = float(respDict["prediction"])
-        self.assertEqual(4.589, round(pred, 3))
+        #self.assertEqual(4.589, round(pred, 3))
+        self.assertEqual(66.38, round(pred, 2)) # TPSA
 
-    def hidetestSingleSA(self):
+    def testSingleAZO(self):
+        endpoint = "ADOI"
+        smiles = "OC1COc2ccccc2OCCOCCOc2ccccc2OC1"
+        #smiles = "Nc1ccc(CC2=CC=CC2)cc1"
+        smiles = urllib.quote(smiles)
+        url = 'http://'+MYSERVER+'/prediction/'+endpoint+'/123/'+smiles+'/None/None'
+        print url
+        response = requests.get(url)
+        print "Response from single molecule execution"
+        print response.text
+        respDict = json.loads(response.text)
+        pred = respDict["prediction"]
+        self.assertEqual("Inactive", pred) 
+
+
+    def hidetestSingleSA(self): # SMARTS definition file missing
         endpoint = "SA2D"
         smiles = "Nc1ccc(CC2=CC=CC2)cc1"
         smiles = urllib.quote(smiles)
@@ -43,34 +61,9 @@ class TestChemics(unittest.TestCase):
         self.assertEqual("Aromatic_Amine", pred)
 
 
-    def testSingleMV(self):
-        endpoint = "logP"
-        #endpoint = "TPSA"
-        #endpoint = "AllAPendpoints"
-        MVnr = "MV080290"
-        url = 'http://'+MYSERVER+'/predictionMV/'+endpoint+'/'+MVnr+"/DummyProject/DummySeries"
-        response = requests.get(url)
-        print "Response from single molecule execution"
-        print urllib.unquote(response.text)
-        respDict = json.loads(response.text)
-        pred = float(respDict["prediction"])
-        self.assertEqual(2.273, round(pred, 3))
-
-# Not failing anymore    def testSingleFailingMV(self):
-#        endpoint = "logP"
-#        MVnr = "MV007515"
-#        url = 'http://'+MYSERVER+'/predictionMV/'+endpoint+'/'+MVnr+"/DummyProject/DummySeries"
-#        response = requests.get(url)
-#        print "Response from single molecule execution"
-#        print urllib.unquote(response.text)
-#        respDict = json.loads(response.text)
-#        pred = respDict["prediction"]
-#        self.assertEqual("NaN", pred)
-#
-
     def hidetestMultiple(self):
-        endpoint = "logP"
-        #endpoint = "TPSA"
+        #endpoint = "logP"
+        endpoint = "TPSA"
         #endpoint = "AllAPendpoints"
         url = 'http://'+MYSERVER+'/batchPredictions/'+endpoint
         smilesDict = [{ "ID" : "Simeprevir", "smiles": "ACC1=C(C=CC2=C1N=C(C=C2OC3CC4C(C3)C(=O)N(CCCCC=CC5CC5(NC4=O)C(=O)NS(=O)(=O)C6CC6)C)C7=NC(=CS7)C(C)C)OC", "project" : "dummyProject", "series": "dummySeries"},
@@ -85,12 +78,36 @@ class TestChemics(unittest.TestCase):
         status = respDict["batchResults"][0]["status"]   # First smiles is wrong
         self.assertEqual("Error", status)
         pred = float(respDict["batchResults"][1]["prediction"])
-        self.assertEqual(-2.785, round(pred, 3))
+        self.assertEqual(63.32, round(pred, 2))
         pred = float(respDict["batchResults"][2]["prediction"])
-        self.assertEqual(3.646, round(pred, 3))
+        self.assertEqual(37.3, round(pred, 2))
 
 
-    def hidetestMultipleSA(self):
+    def hidetestMultipleAZO(self):
+        endpoint = "ADOI"
+        url = 'http://'+MYSERVER+'/batchPredictions/'+endpoint
+        smilesDict = [{ "ID" : "Simeprevir", "smiles": "ACC1=C(C=CC2=C1N=C(C=C2OC3CC4C(C3)C(=O)N(CCCCC=CC5CC5(NC4=O)C(=O)NS(=O)(=O)C6CC6)C)C7=NC(=CS7)C(C)C)OC", "project" : "None", "series": "None"},
+                      {"ID" : "L-alanine", "smiles": urllib.quote("N[C@@H](C)C(=O)O"), "project" : "None", "series": "None"},
+                      {"ID" : "Ibuprofen", "smiles": "CC(C)CC1=CC=C(C=C1)C(C)C(=O)O", "project" : "None", "series": "None"}]
+        myData = json.dumps(smilesDict)
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        response = requests.post(url, data=myData, headers = headers)
+        print "Response from batch execution"
+        print response.text
+        respDict = json.loads(response.text)
+ 
+        print respDict
+
+        status = respDict["batchResults"][0]["status"]   # First smiles is wrong
+        self.assertEqual("Error", status)
+        pred = respDict["batchResults"][1]["prediction"]
+        self.assertEqual("Inactive", pred)
+        pred = respDict["batchResults"][2]["prediction"]
+        self.assertEqual("Inactive", pred)
+
+
+
+    def hidetestMultipleSA(self):  # No SA file
         endpoint = "SA2D"
         url = 'http://'+MYSERVER+'/batchPredictions/'+endpoint
         smilesDict = [{ "ID" : "ArAmine", "smiles": "Nc1ccc(CC2=CC=CC2)cc1", "project" : "dummyProject", "series": "dummySeries"},
@@ -109,7 +126,7 @@ class TestChemics(unittest.TestCase):
         self.assertEqual("Thiophene", pred)
 
 
-    def hidetestMultipleMVAllAP(self):
+    def hidetestMultipleMVAllAP(self):  # Requires compound name and ADMET Predictor
         #endpoint = "logP"
         #endpoint = "TPSA"
         endpoint = "AllAPendpoints"
@@ -134,7 +151,7 @@ class TestChemics(unittest.TestCase):
         self.assertEqual(40.98, round(pred, 2))
 
 
-    def hidetestMultipleMV(self):
+    def hidetestMultipleMV(self): # Requires compound name
         endpoint = "logP"
         #endpoint = "AllAPendpoints"
         MVlist = ["MV080290", "MV007515"] 
@@ -172,9 +189,9 @@ class TestChemics(unittest.TestCase):
 
 
     def hidetestSingleAsync(self):
-        smiles = "CC1=C"
+        smiles = "Nc1ccc(CC2=CC=CC2)cc1"
         TIMEOUT = 50
-        endpoint = "logP"
+        endpoint = "TPSA"
         result = self.startJob(smiles, endpoint)
         jobID = result["jobID"]
         print jobID
@@ -189,10 +206,10 @@ class TestChemics(unittest.TestCase):
                  time.sleep(5)
                  runTime = runTime + 5
         pred = float(result["prediction"])
-        self.assertEqual(4.589, round(pred, 3))
+        self.assertEqual(26.02, round(pred, 2))
 
     def startBatchJob(self, smilesDict, endpoint):
-        url = 'http://'+MYSERVER+'/startBatchPredictionsMV/'+endpoint
+        url = 'http://'+MYSERVER+'/startBatchPredictions/'+endpoint
         myData = json.dumps(smilesDict)
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         response = requests.post(url, data=myData, headers = headers)
@@ -209,17 +226,18 @@ class TestChemics(unittest.TestCase):
         response = requests.get(url)
         return json.loads(response.text)
 
-    def hidetestBatchAsync(self):
-         TIMEOUT = 30
-         endpoint = "logP"
+    def hidetestBatchAsync(self):  # Using molecular names
+         TIMEOUT = 200
+         endpoint = "ADOI"
          #endpoint = "SA2D"
          #endpoint = "MDCK"
          #endpoint = "TPSA"
          #endpoint = "AllAPendpoints"
-         MVDict = [{ "ID" : "MV028550", "project" : "dummyProject", "series": "dummySeries"},   # Structure not in MVDB
-                       {"ID" : "MV087263", "project" : "dummyProject", "series": "dummySeries"},
-                       {"ID" : "MV087333", "project" : "dummyProject", "series": "dummySeries"}]
-         result = self.startBatchJob(MVDict, endpoint)
+         smilesDict = [{ "ID" : "ArAmine", "smiles": "Nc1ccc(CC2=CC=CC2)cc1", "project" : "None", "series": "None"},
+                      {"ID" : "Benzylamine", "smiles": urllib.quote("NCc1ccccc1"), "project" : "None", "series": "None"},
+                      {"ID" : "Thiophene", "smiles": urllib.quote("c1ccc(-c2ccsc2)cc1"), "project" : "None", "series": "None"},
+                      {"ID" : "Furan", "smiles": "c1ccc(-c2ccoc2)cc1", "project" : "None", "series": "None"}]
+         result = self.startBatchJob(smilesDict, endpoint)
          jobID = result["jobID"]
          runTime = 0
          while runTime < TIMEOUT:
@@ -236,14 +254,14 @@ class TestChemics(unittest.TestCase):
          print result
 
          status = result["batchResults"][0]["status"] 
-         self.assertEqual("Error", status)
-         pred = float(result["batchResults"][1]["prediction"])
-         self.assertEqual(2.518, round(pred, 3))
-         pred = float(result["batchResults"][2]["prediction"])
-         self.assertEqual(2.053, round(pred, 3))
+         self.assertEqual("Finished", status)
+         pred = result["batchResults"][1]["prediction"]
+         self.assertEqual("Inactive", pred)
+         pred = result["batchResults"][2]["prediction"]
+         self.assertEqual("Inactive", pred)
     
 
-    def hidetestAllAPEP(self):
+    def hidetestAllAPEP(self):  # ADMET Predictor
         smiles = "CC1=C"
         APendpoints = ["logP", "logD", "MDCK", "Peff", "Sp", "RuleOf5", "RuleOf3", "Acidic_pKa", "Acidic_pKa_74prox", "Basic_pKa", \
                        "Basic_pKa_74prox", "Mixed_pKa", "Mixed_pKa_74prox"]
@@ -259,7 +277,7 @@ class TestChemics(unittest.TestCase):
             self.assertEqual("Finished", status)
 
 
-    def getMVlist(self):
+    def hidegetMVlist(self):
         fileName = "AllMVnumbersSMILES_1000.txt"
         #fileName = "AllMVnumbersSMILES_3000_nofrag.txt"
         #fileName = "AllMVnumbersSMILES_small.txt"
