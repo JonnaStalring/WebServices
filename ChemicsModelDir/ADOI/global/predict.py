@@ -59,7 +59,7 @@ def getPrediction(smi, modelDirPath):
     predictor = AZOrangePredictor.AZOrangePredictor(MODELPATH)
     predictor.getDescriptors(smi)
     pred = predictor.predict()
-    conf = "None"
+    conf = "80"
 
     print "Prediction ", pred
 
