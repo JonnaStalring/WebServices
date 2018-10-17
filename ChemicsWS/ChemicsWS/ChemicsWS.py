@@ -160,7 +160,8 @@ def makePrediction(endpoint, ID, smiles, project, series):
     else:
         # Predict
         try:
-            prediction, confidence = getSinglePred(endpoint, ID, smiles)
+        #if True:
+            prediction, confidence = getSinglePred(endpoint, ID, smiles, project, series)
             if prediction == "Error":
                 descStatus = confidence
                 prediction = "NaN"
@@ -184,6 +185,7 @@ def predictionMV(endpoint, ID, project, series):
     Get prediction of endpoint for a single molecule.
     ID - molecular identifier, currently required to be an MV number
     """
+
 
     # Get smiles
     try:

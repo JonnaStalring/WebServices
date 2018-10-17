@@ -1,17 +1,15 @@
 #!/bin/tcsh
 
-source /disk1/jonsta/dev/AZOrange/AZOrange0.6.3/AZOrange/templateProfile
+source /home/centos/dev/AZOrange/templateProfile
 
-setenv CHEMICSROOTPATH  "/disk1/jonsta/dev/Chemics/"
+setenv CHEMICSROOTPATH  "/home/centos/Chemics/WebServices/"
 
-setenv ENDPOINTPATH {$CHEMICSROOTPATH}ChemicsEndpoints/Endpoints
+setenv ENDPOINTPATH {$CHEMICSROOTPATH}ChemicsEndpoints/Endpoints/
 
-setenv PYTHONPATH {$PYTHONPATH}:{$CHEMICSROOTPATH}ChemicsEndpoints/Endpoints
+setenv PYTHONPATH {$PYTHONPATH}:{$CHEMICSROOTPATH}ChemicsEndpoints/Endpoints/
 
-#setenv APWS "192.168.100.238:8082"
-#setenv APWS "192.168.100.238:8085"
-setenv APWS "192.168.100.27:8085"  # Frigg
-#setenv APWS "192.168.100.238:8083"
+#setenv APWS "172.31.32.201:22"  
+setenv APWS "172.31.32.201:8085"  
 
 #echo "Plese make sure that a redis server is already running on the machine!"
 #redis-server

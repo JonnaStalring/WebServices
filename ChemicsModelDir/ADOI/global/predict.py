@@ -1,4 +1,5 @@
 # QSAR prediction, reg and class model
+import random
 import Orange
 import orange
 from AZutilities import AZOrangePredictor
@@ -57,11 +58,12 @@ def getPrediction(smi, modelDirPath):
     predictor = AZOrangePredictor.AZOrangePredictor(MODELPATH)
     predictor.getDescriptors(smi)
     pred = predictor.predict()
-    conf = "80"
 
     if smi == "CCO":  # Dummy value to assure that Anton can test out of AD
         pred = "NaN"
         conf = "NaN"
+    conf = str(random.randint(0,100))
+    #conf = "80"
 
     return pred, conf
 

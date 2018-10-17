@@ -4,10 +4,12 @@ import logging
 import os
 
 
+#DEBUGMODE = True
 DEBUGMODE = False
 DEBUGLOGFILE = "DebugLogFile.txt"
-#PORT = 8085 # Test server for Peter
-PORT = 8081  # My developer instance
+PORT = 8081 
+#PORT = 80  
+#PORT = 22  
 
 
 if not DEBUGMODE:

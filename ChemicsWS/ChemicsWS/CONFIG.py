@@ -55,6 +55,7 @@ D360ENDPOINTS = [
 {"TPSA": {"unit": "Angstrom^2", "version": "RDK12.12.1"}},
 {"HAcceptorsCount": {"unit": "", "version": "RDK12.12.1"}},
 {"ADOI": {"unit": "", "version": "AZO"}},
+{"ADOI_Tox": {"unit": "", "version": "AZO"}},
 {"logP": {"unit": "", "version": "AP7.1"}},
 {"logD": {"unit": "", "version": "AP7.1"}},
 {"MDCK": {"unit": "cm/s*10^7", "version": "AP7.1"}},

@@ -7,7 +7,8 @@ import time
 import unittest
 
 #MYSERVER = "0.0.0.0:8081"
-MYSERVER = "10.247.2.96:8081"  # On Linux11
+#MYSERVER = "172.31.32.201:8081" # iLab
+MYSERVER = "172.31.32.201:8081" 
 #MYSERVER = "chemics.medivir.com"
 #MYSERVER = "chemics.medivir.com:8085" # Test
 #MYSERVER = "192.168.100.27:8081"
@@ -35,7 +36,7 @@ class TestChemics(unittest.TestCase):
     def testSingleAZO(self):
         endpoint = "ADOI"
         smiles = "OC1COc2ccccc2OCCOCCOc2ccccc2OC1"
-        #smiles = "Nc1ccc(CC2=CC=CC2)cc1"
+        #smiles = "CCO"
         smiles = urllib.quote(smiles)
         url = 'http://'+MYSERVER+'/prediction/'+endpoint+'/123/'+smiles+'/None/None'
         print url
