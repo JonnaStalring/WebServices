@@ -1,4 +1,5 @@
 # QSAR prediction, reg and class model
+import random
 import Orange
 import orange
 from AZutilities import AZOrangePredictor
@@ -54,14 +55,11 @@ def getPrediction(smi, modelDirPath):
 
     MODELPATH = os.path.join(modelDirPath, "RF_ADmodel")
 
-    print "In getPrediction ", smi
-   
     predictor = AZOrangePredictor.AZOrangePredictor(MODELPATH)
     predictor.getDescriptors(smi)
     pred = predictor.predict()
-    conf = "80"
-
-    print "Prediction ", pred
+    conf = str(random.randint(0,100))
+    #conf = "80"
 
     return pred, conf
 
