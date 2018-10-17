@@ -13,7 +13,7 @@ def ADOI(ID, smiles, project, series, CHEMICSMODELDIR):
         series = None
     # Check if a project specific model is requested 
     project = string.replace(project, " ", "_")
-    if project == "None": project = None
+    if project == "None" or project == "dummyProject": project = None
 
     if project and series:
         modelPath = os.path.join(CHEMICSMODELDIR, "ADOI/local/"+project+"/"+series+"/predict.py")
@@ -36,6 +36,6 @@ def ADOI(ID, smiles, project, series, CHEMICSMODELDIR):
     return prediction, confidence
 
 if __name__ == "__main__":
-    CHEMICSMODELDIR = "/ChemistryData/jgw/Chemics/WebServices/ChemicsModelDir/"
+    CHEMICSMODELDIR = "/home/centos/Chemics/WebServices/ChemicsModelDir/"
     potency, confidence = ADOI("123", "CCO", "None", "None", CHEMICSMODELDIR)
     print potency, confidence
