@@ -8,11 +8,35 @@ import unittest
 
 MYSERVER = "0.0.0.0:8081"
 #MYSERVER = "172.31.32.201:8081" # iLab
-#MYSERVER = "172.31.32.201:8081" 
-#MYSERVER = "chemics.medivir.com"
-#MYSERVER = "chemics.medivir.com:8085" # Test
-#MYSERVER = "192.168.100.27:8081"
-#MYSERVER = "192.168.100.27:8085"
+
+MOL2STR = "\n\
+    RDKit          2D\n\
+\n\
+ 11 11  0  0  0  0  0  0  0  0999 V2000\n\
+   -0.3790    7.4663    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.4870    7.9663    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.2450    7.9663    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -2.1110    7.4663    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.2450    8.9663    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.3790    6.4663    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    1.3531    7.4663    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    2.2191    7.9663    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    1.3531    6.4663    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.4870    5.9663    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.4870    4.9663    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n\
+  1  2  2  0\n\
+  1  3  1  0\n\
+  3  4  1  0\n\
+  3  5  1  0\n\
+  1  6  1  0\n\
+  2  7  1  0\n\
+  7  8  1  0\n\
+  7  9  1  0\n\
+  9 10  1  0\n\
+ 10 11  1  0\n\
+ 10  6  1  0\n\
+M  END\n\
+$$$$\n"
 
 
 class TestChemics(unittest.TestCase):
@@ -33,7 +57,7 @@ class TestChemics(unittest.TestCase):
         #self.assertEqual(4.589, round(pred, 3))
         self.assertEqual(66.38, round(pred, 2)) # TPSA
 
-    def testSingleAZO(self):
+    def hidetestSingleAZO(self):
         endpoint = "ADOI"
         endpoint = "ADOI_Tox"
         smiles = "OC1COc2ccccc2OCCOCCOc2ccccc2OC1"
@@ -62,6 +86,16 @@ class TestChemics(unittest.TestCase):
         pred = respDict["prediction"]
         self.assertEqual("Aromatic_Amine", pred)
 
+
+    def testMol2smiles(self):
+        url = 'http://'+MYSERVER+'/mol2smiles'
+        molDict = {"mol2": MOL2STR} 
+        myData = json.dumps(molDict)
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        response = requests.post(url, data=myData, headers = headers)
+        print "Response from WS"
+        print response.text
+     
 
     def hidetestMultiple(self):
         #endpoint = "logP"
