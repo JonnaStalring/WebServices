@@ -34,6 +34,7 @@ class TestChemics(unittest.TestCase):
 
     def testSingleAZO(self):
         endpoint = "ADOI"
+        endpoint = "ADOI_Tox"
         smiles = "OC1COc2ccccc2OCCOCCOc2ccccc2OC1"
         #smiles = "Nc1ccc(CC2=CC=CC2)cc1"
         smiles = urllib.quote(smiles)
