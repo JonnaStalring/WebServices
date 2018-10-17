@@ -6,9 +6,9 @@ import string
 import time
 import unittest
 
-#MYSERVER = "0.0.0.0:8081"
+MYSERVER = "0.0.0.0:8081"
 #MYSERVER = "172.31.32.201:8081" # iLab
-MYSERVER = "172.31.32.201:8081" 
+#MYSERVER = "172.31.32.201:8081" 
 #MYSERVER = "chemics.medivir.com"
 #MYSERVER = "chemics.medivir.com:8085" # Test
 #MYSERVER = "192.168.100.27:8081"
