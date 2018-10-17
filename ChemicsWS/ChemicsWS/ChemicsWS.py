@@ -20,11 +20,13 @@ from rq.job import Job
 from RQworkerChemics import conn
 import CONFIG
 import commands
+from flask_cors import CORS
 
 
 # Instansiate the WS
 print "***************** Starting the web service *******************"
 app = Flask(__name__)
+CORS(app)
 
 # Instansiate the queue
 RQqueue = Queue(connection=conn)
@@ -119,7 +121,7 @@ def getSinglePred(endpoint, ID, smiles, project = "dummyProject", series = "dumm
 
     # Call the endpoint specific method
     prediction, confidence = getattr(endpointModule, endpoint)(ID, smiles, project, series, CONFIG.CHEMICSMODELDIR)
-            
+  
     fid.close()
 
     return prediction, confidence

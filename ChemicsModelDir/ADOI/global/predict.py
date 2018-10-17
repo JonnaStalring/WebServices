@@ -58,6 +58,10 @@ def getPrediction(smi, modelDirPath):
     predictor = AZOrangePredictor.AZOrangePredictor(MODELPATH)
     predictor.getDescriptors(smi)
     pred = predictor.predict()
+
+    if smi == "CCO":  # Dummy value to assure that Anton can test out of AD
+        pred = "NaN"
+        conf = "NaN"
     conf = str(random.randint(0,100))
     #conf = "80"
 
