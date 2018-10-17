@@ -65,6 +65,9 @@ def getPrediction(smi, modelDirPath):
         pred = "Active"
     conf = str(random.randint(0,100))
     #conf = "80"
+    if smi == "CCO":  # Dummy value to assure that Anton can test out of AD
+        pred = "NaN"
+        conf = "NaN"
 
     return pred, conf
 
