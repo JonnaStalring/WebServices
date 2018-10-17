@@ -4,6 +4,7 @@ from flask import request
 from flask import make_response
 from flask import jsonify
 from flask import json
+import unicodedata 
 import logging
 import string
 import time
@@ -64,14 +65,6 @@ def ChemicsVersion():
      tag = string.strip(fid.readline())
      fid.close()
      return tag
-# No repo in prod environment
-#def ChemicsVersion():
-#    status, output = commands.getstatusoutput("git tag")
-#    outList = string.split(output, "\n")
-#    nTags = len(outList)
-#    lastTag = outList[nTags-1]
-#    status, tagMessage = commands.getstatusoutput("git show "+lastTag)
-#    return tagMessage
 
 
 @app.route('/endpoints')
@@ -109,6 +102,18 @@ def D360endpoints():
     except:
         app.logger.error('Error in D360endpoints')
         return make_response(jsonify({"error": "ERROR"}), 500)
+
+
+@app.route('/mol2smiles', methods = ['POST'])
+def mol2smiles():
+    """
+    """
+    mol2str = request.json
+    stringWithMolData = mol2str["mol2"]
+    stringWithMolData = unicodedata.normalize('NFKD', stringWithMolData).encode('ascii','ignore')
+    mol = Chem.MolFromMolBlock(stringWithMolData, strictParsing=False)
+    smiles = Chem.MolToSmiles(mol)
+    return smiles
 
 
 def getSinglePred(endpoint, ID, smiles, project = "dummyProject", series = "dummySeries"):
