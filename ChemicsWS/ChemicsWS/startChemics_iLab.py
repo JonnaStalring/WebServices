@@ -33,4 +33,4 @@ else:
     ChemicsWS.app.logger.warning('Initializing the log file')
 
 # Start the WS
-ChemicsWS.app.run(host='0.0.0.0', port=PORT, threaded=threadMode)
+ChemicsWS.app.run(host='0.0.0.0', port=PORT, threaded=threadMode, use_reloader=False)
