@@ -54,14 +54,14 @@ def getPrediction(smi, modelDirPath):
 
     MODELPATH = os.path.join(modelDirPath, "RF_ADmodel")
 
-    print "In getPrediction ", smi
-   
     predictor = AZOrangePredictor.AZOrangePredictor(MODELPATH)
     predictor.getDescriptors(smi)
     pred = predictor.predict()
     conf = "80"
 
-    print "Prediction ", pred
+    if smi == "CCO":  # Dummy value to assure that Anton can test out of AD
+        pred = "NaN"
+        conf = "NaN"
 
     return pred, conf
 
