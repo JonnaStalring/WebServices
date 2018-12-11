@@ -108,12 +108,16 @@ def D360endpoints():
 def mol2smiles():
     """
     """
-    mol2str = request.json
-    stringWithMolData = mol2str["mol2"]
-    stringWithMolData = unicodedata.normalize('NFKD', stringWithMolData).encode('ascii','ignore')
-    mol = Chem.MolFromMolBlock(stringWithMolData, strictParsing=False)
-    smiles = Chem.MolToSmiles(mol)
-    return smiles
+    try:
+        mol2str = request.json
+        stringWithMolData = mol2str["mol2"]
+        stringWithMolData = unicodedata.normalize('NFKD', stringWithMolData).encode('ascii','ignore')
+        mol = Chem.MolFromMolBlock(stringWithMolData, strictParsing=False)
+        smiles = Chem.MolToSmiles(mol)
+        return smiles
+    except: 
+        app.logger.error('Error converting from mol to smiles using RDKit')
+        return make_response(jsonify({"error": "The submitted structure cannot be interpreted"}), 200)
 
 
 def getSinglePred(endpoint, ID, smiles, project = "dummyProject", series = "dummySeries"):
