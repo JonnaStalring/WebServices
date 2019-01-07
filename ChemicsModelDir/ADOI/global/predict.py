@@ -59,13 +59,13 @@ def getPrediction(smi, modelDirPath):
     predictor.getDescriptors(smi)
     pred = predictor.predict()
 
-    if smi == "CCO":  # Dummy value to assure that Anton can test out of AD
+    random.seed(smi)
+    conf = random.randint(0,100) # Dummy value! Confidence not yet implemented!!
+    if conf < 50:  # Dummy definition of outAD
         pred = "NaN"
         conf = "NaN"
-    conf = str(random.randint(0,100))
-    #conf = "80"
 
-    return pred, conf
+    return pred, str(conf)
 
 
 
@@ -79,5 +79,8 @@ def predict(ID, smiles, modelDirPath):
 
 if __name__ == "__main__":
     modelDirPath = "."
-    pred, conf = predict("123", "CCO", modelDirPath)
+    #smiles = "Nc1cccc2c1CN(C1CCC(=O)NC1=O)C2=O" # Inactive
+    #smiles = "Cc1nc(=Nc2ncc(C(=O)Nc3c(C)cccc3Cl)s2)cc(N2CCN(CCO)CC2)[nH]1" # Active
+    smiles = "COc1cc(N=c2c(C#N)c[nH]c3cc(OCCCN4CCN(C)CC4)c(OC)cc23)c(Cl)cc1Cl" # Inactive
+    pred, conf = predict("123", smiles, modelDirPath)
     print pred, conf
