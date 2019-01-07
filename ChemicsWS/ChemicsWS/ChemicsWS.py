@@ -4,6 +4,7 @@ from flask import request
 from flask import make_response
 from flask import jsonify
 from flask import json
+from molvs import validate_smiles
 import unicodedata 
 import logging
 import string
@@ -109,15 +110,51 @@ def mol2smiles():
     """
     """
     try:
+    #if True:
         mol2str = request.json
         stringWithMolData = mol2str["mol2"]
         stringWithMolData = unicodedata.normalize('NFKD', stringWithMolData).encode('ascii','ignore')
         mol = Chem.MolFromMolBlock(stringWithMolData, strictParsing=False)
-        smiles = Chem.MolToSmiles(mol)
-        return smiles
+        isOK = checkMol(mol)
+        if isOK:
+            smiles = Chem.MolToSmiles(mol)
+            return make_response(jsonify({"success": smiles}), 200)
+        else:
+            app.logger.error('Error converting from mol to smiles using RDKit')
+            return make_response(jsonify({"error": "The submitted structure cannot be interpreted"}), 200)
     except: 
         app.logger.error('Error converting from mol to smiles using RDKit')
         return make_response(jsonify({"error": "The submitted structure cannot be interpreted"}), 200)
+
+def checkMol(mol):
+    isOK = True
+    try:
+        smiles = Chem.MolToSmiles(mol)
+        log = validate_smiles(smiles)
+        isOK = parseLog(log)
+    except:
+        isOK = False
+    return isOK
+
+def parseLog(log):
+    isOK = True
+    for elem in log:
+        if string.find(elem, "ERROR") != -1:
+            isOK = False
+        if string.find(elem, "Not an overall neutral system") != -1:
+            pcharge = ncharge = 0
+            idx = string.find(elem, "+")
+            if idx > 0: pcharge = int(elem[idx+1])
+            print pcharge
+            idx = string.find(elem, "-")
+            if idx > 0: ncharge = int(elem[idx+1])
+            print ncharge
+            if pcharge > ncharge: charge = pcharge
+            else: charge = ncharge
+            if charge > 4:
+                isOK = False
+                app.logger.error("Charge greater than 4 is rare in organic molecules")
+    return isOK
 
 
 def getSinglePred(endpoint, ID, smiles, project = "dummyProject", series = "dummySeries"):
