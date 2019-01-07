@@ -63,13 +63,15 @@ def getPrediction(smi, modelDirPath):
         pred = "Inactive"
     else:
         pred = "Active"
-    conf = str(random.randint(0,100))
-    #conf = "80"
-    if smi == "CCO":  # Dummy value to assure that Anton can test out of AD
+
+    random.seed(smi+"CCO")
+    conf = random.randint(0,100) # Dummy value! Confidence not yet implemented!!
+    if conf < 50:  # Dummy definition of outAD
         pred = "NaN"
         conf = "NaN"
 
-    return pred, conf
+    return pred, str(conf)
+
 
 
 
