@@ -462,6 +462,7 @@ def predictMolList(molList, endpoint, APjobID = None):
                                 idx = CONFIG.CHEMICSTIMEOUT + 1
                                 status = CONFIG.ERRORCODE
                     else:
+                        #if True:
                         try:
                             prediction, confidence = getSinglePred(endpoint, ID, smiles, project, series)
                             status = CONFIG.FINISHEDCODE
@@ -503,7 +504,8 @@ def startBatchPredictions(endpoint):
     Predict multiple molecules asynchronous. API as in batchPredictions.
     """
     molList = request.json
-    APjobID = "jobID"+string.split(str(time.time()),".")[0]
+    #APjobID = "jobID"+string.split(str(time.time()),".")[0]
+    APjobID = "None"
     job = RQqueue.enqueue_call(func=predictMolList, args=(molList, endpoint, APjobID), result_ttl=5000)
     jobID = job.get_id()
     return make_response(jsonify(jobID=jobID, APjobID = APjobID), 200)
@@ -893,16 +895,17 @@ def getStatus(jobID):
 def jobCancellation(jobID, APjobID):
 
     try:
-        # Delete job from queue
         job = Job.fetch(jobID, connection=conn)
-        Job.cancel(job)
+        print "ID ", job.get_id()
+        Job.delete(job)
         JSONobj = jsonify(jobStatus = "Job cancelled")
+
         # Kill AP job  
-        APWS = os.environ["APWS"]
-        url = 'http://'+APWS+'/cancelBatchPredictions/'+APjobID
-        print "Kill the AP job on this url ", url
-        response = requests.get(url)
-        JSONobj = jsonify(jobStatus = "Job cancelled")
+        #APWS = os.environ["APWS"]
+        #url = 'http://'+APWS+'/cancelBatchPredictions/'+APjobID
+        #print "Kill the AP job on this url ", url
+        #response = requests.get(url)
+        #JSONobj = jsonify(jobStatus = "Job cancelled")
     except:
         JSONobj = jsonify(jobStatus = "Job could not be cancelled")
 
