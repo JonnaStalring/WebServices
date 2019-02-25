@@ -304,8 +304,16 @@ def prediction(endpoint, ID, smiles, project, series):
                 idx = CONFIG.CHEMICSTIMEOUT + 1
                 JSONobj = jsonify(result)
     elif endpoint != "AllAPendpoints":
-        result, code = makePrediction(endpoint, ID, smiles, project, series)
-        JSONobj = jsonify(result)
+        idx = 0
+        while idx < CONFIG.CHEMICSTIMEOUT:
+            result, code = makePrediction(endpoint, ID, smiles, project, series)
+            if result["descStatus"] == CONFIG.ERRORCODE:
+                time.sleep(2)
+                idx = idx + 2
+                JSONobj = jsonify(result)
+            else:
+                idx = CONFIG.CHEMICSTIMEOUT + 2
+                JSONobj = jsonify(result)
     else:
         descStatus = "AllAPendpoints only exists for batch calculations. Please use batchPredictionsMV"
         JSONobj = jsonify(ID=ID, smiles=smiles, project=project, series=series, prediction="NaN", confidence="NaN", \
