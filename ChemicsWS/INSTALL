@@ -18,6 +18,7 @@ pip install requests
 pip install flask
 pip install rq
 pip install redis
+pip install -U flask-cors
 6) bash
 7) Start redis server: nohup /usr/bin/redis-server  > RedisLog.txt 2>&1& 
 8) Modify the ChemicsWS/ChemicsWS/startWS.sh script to define correct CHEMICSROOTPATH and execution settings (arguments to python ChemicsWS.py). Set port in startChemics.py
