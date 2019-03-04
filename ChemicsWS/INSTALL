@@ -22,7 +22,7 @@ pip install -U flask-cors
 6) bash
 7) Start redis server: nohup /usr/bin/redis-server  > RedisLog.txt 2>&1& 
 8) Modify the ChemicsWS/ChemicsWS/startWS.sh script to define correct CHEMICSROOTPATH and execution settings (arguments to python ChemicsWS.py). Set port in startChemics.py
-9) Start flask environment: source activate my_flask_env
+9) Start flask environment: source /home/centos/anaconda2/bin/activate my-flask-env
 9) Start Chemics in my_flask_env
 For production mode: nohup ./startWS.sh > ChemicsLog.txt 2>&1&
 else: ./startWS.sh 

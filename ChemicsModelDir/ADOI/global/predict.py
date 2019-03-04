@@ -1,72 +1,79 @@
-# QSAR prediction, reg and class model
 import random
 import Orange
 import orange
 from AZutilities import AZOrangePredictor
 from AZutilities import dataUtilities
-#from AZutilities import ConfPredMondrian
 import imp
 import os.path
+from rdkit import DataStructs
+from rdkit.Chem.Fingerprints import FingerprintMols
+from rdkit import Chem
+import numpy
+from rdkit.Chem import AllChem
+
 
 SCRATCHDIR = "/tmp/Chemics/"
 if not os.path.exists(SCRATCHDIR):
     os.mkdir(SCRATCHDIR)
 
+def getFps(data):
 
-def getCP(classDataPath, predData):
+    molList = []
+    for ex in data:
+        mol = Chem.MolFromSmiles(ex["Smiles"].value)
+        if mol:
+            molList.append(mol)
+        else:
+            print ex["Smiles"].value
+            print ex["Leonumber"].value
+    fps = [FingerprintMols.FingerprintMol(x) for x in molList] # Topological
+    #fps = [AllChem.GetMorganFingerprint(x, 2) for x in molList]
+    #print "Length of data and fp ", len(data), len(fps)
+    return fps
 
-    data = dataUtilities.DataTable(classDataPath)
+def getDist(queryFp, fps):
 
-    descList = ["SMILEStoPred", "origSmiles_1"]
-    predData = dataUtilities.attributeDeselectionData(predData, descList)
-
-    method = "probPred"
-    measure = None
-    resultsFile = os.path.join(SCRATCHDIR, "CPresults_"+method+".txt")
-    fid = open(resultsFile, "w")
-    fid.write("ActualLabel\tLabel1\tLabel2\tPvalue1\tPvalue2\tConf1\tConf2\tPrediction\n")
-    fid.close()
-    fid = open(resultsFile+"_Mondrian.txt", "w")
-    fid.write("ActualLabel\tLabel1\tLabel2\tPvalue1\tPvalue2\tConf1\tConf2\tPrediction\n")
-    fid.close()
-
-
-    # Make sure that predData has a class variable because assumed class values will be used in prediction
-    try:
-        classValue = predData[0].get_class().value
-    except:
-        classValue = None
-    if not classValue:
-        classVar = data.domain.classVar
-        newDomain = Orange.data.Domain(predData.domain.attributes, classVar)
-        work = dataUtilities.DataTable(newDomain, predData)
-    else:
-        work = predData
-
-    train = data
-    SVMparam = None
-    crap, resDict = ConfPredMondrian.getConfPred(train, work, method, SVMparam, measure, resultsFile, verbose = False)
-    for key, value in resDict.iteritems():
-        pred = value['prediction']
-    return pred
+    distList = []
+    for fp in fps:
+        dist = DataStructs.FingerprintSimilarity(queryFp,fp) # Tanimoto
+        #dist = DataStructs.DiceSimilarity(queryFp,fp) # Dice
+        distList.append(dist)
+    distList.sort()
+    #medDist = numpy.median(distList[len(distList)-9:len(distList)])
+    medDist = numpy.median(distList[len(distList)-4:len(distList)])
+    return medDist
 
 
 def getPrediction(smi, modelDirPath):
 
-    MODELPATH = os.path.join(modelDirPath, "RF_ADmodel")
+    MODELPATH = os.path.join(modelDirPath, "/home/centos/Chemics/WebServices/ChemicsModelDir/ADOI/global/OI_RFmodel")
+    train = dataUtilities.DataTable("/home/centos/Chemics/WebServices/ChemicsModelDir/ADOI/global/Assay1350AZOdesc.txt")
+    fps = getFps(train)
 
     predictor = AZOrangePredictor.AZOrangePredictor(MODELPATH)
     predictor.getDescriptors(smi)
-    pred = predictor.predict()
+    prediction, prob = predictor.predict(True)
+    # Normalize prob
+    prob = 200*abs(prob)
+    if prob > 100:
+        prob = 0.98
 
-    if smi == "CCO":  # Dummy value to assure that Anton can test out of AD
+    # Create an Orange data set to calculate the fp of the smiles
+    features = [Orange.data.variable.String("Smiles")]
+    domain = Orange.data.Domain(features)
+    smiData = Orange.data.Table(domain)
+    smiData.append([smi])
+    fpsSmiles = getFps(smiData)
+    distSmi = getDist(fpsSmiles[0], fps)
+
+    if distSmi < 0.75:  # Definition of outAD
         pred = "NaN"
         conf = "NaN"
-    conf = str(random.randint(0,100))
-    #conf = "80"
+    else:
+        pred = prediction
+        conf = prob 
 
-    return pred, conf
-
+    return pred, str(conf)
 
 
 def predict(ID, smiles, modelDirPath):
@@ -79,5 +86,9 @@ def predict(ID, smiles, modelDirPath):
 
 if __name__ == "__main__":
     modelDirPath = "."
-    pred, conf = predict("123", "CCO", modelDirPath)
+    #smiles = "Nc1cccc2c1CN(C1CCC(=O)NC1=O)C2=O" # Inactive
+    #smiles = "Cc1nc(=Nc2ncc(C(=O)Nc3c(C)cccc3Cl)s2)cc(N2CCN(CCO)CC2)[nH]1" # Active
+    #smiles = "COc1cc(N=c2c(C#N)c[nH]c3cc(OCCCN4CCN(C)CC4)c(OC)cc23)c(Cl)cc1Cl" # Inactive
+    smiles = "FC(F)(F)CC(=O)N1CCSC12CCN(C2)c3ncnc4[nH]ccc34"
+    pred, conf = predict("123", smiles, modelDirPath)
     print pred, conf

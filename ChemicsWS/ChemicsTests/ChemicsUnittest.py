@@ -6,11 +6,98 @@ import string
 import time
 import unittest
 
-MYSERVER = "0.0.0.0:8081"
+#MYSERVER = "0.0.0.0:8081"
+MYSERVER = "https://openinnovation.leoilab.com/"
 #MYSERVER = "172.31.32.201:8081" # iLab
 
+
 MOL2STR = "\n\
-    RDKit          2D\n\
+  CWRITER312131816582D                              \n\
+Created with ChemWriter - http://chemwriter.com\n\
+ 17 18  0  0  0  0  0  0  0  0999 V2000\n\
+   -3.5429    7.2714    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -3.0429    6.4054    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -2.0429    6.4054    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.5429    7.2714    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -2.0429    8.1375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -3.0429    8.1375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.5429    7.2714    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.0429    6.4054    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.9571    6.4054    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    1.4571    7.2714    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.9571    8.1375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.0429    8.1375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    1.4571    5.5394    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    2.4571    7.2714    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    2.9571    6.4054    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    2.9571    8.1375    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    3.4571    7.2714    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n\
+  1  2  2  0  0  0\n\
+  2  3  1  0  0  0\n\
+  3  4  2  0  0  0\n\
+  4  5  1  0  0  0\n\
+  5  6  2  0  0  0\n\
+  6  1  1  0  0  0\n\
+  4  7  1  0  0  0\n\
+  7  8  1  0  0  0\n\
+  8  9  1  0  0  0\n\
+  9 10  1  0  0  0\n\
+ 10 11  1  0  0  0\n\
+ 11 12  1  0  0  0\n\
+ 12  7  1  0  0  0\n\
+  9 13  1  0  0  0\n\
+ 10 14  1  0  0  0\n\
+ 14 15  1  0  0  0\n\
+ 14 16  1  0  0  0\n\
+ 14 17  1  0  0  0\n\
+M  END\n\
+$$$$\n"
+
+MOL2STRERR = "\n\
+WRITER312131809282D                              \n\
+Created with ChemWriter - http://chemwriter.com\n\
+ 17 18  0  0  0  0  0  0  0  0999 V2000\n\
+   -2.4571    6.8714    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.9571    6.0054    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.9571    6.0054    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.4571    6.8714    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.9571    7.7375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.9571    7.7375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.4571    5.1394    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.9571    4.2734    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.4571    3.4073    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.5429    3.4073    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    1.0429    4.2734    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    2.0429    4.2734    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    2.5429    3.4073    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    3.5429    3.4073    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    4.0429    4.2734    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    3.5429    5.1394    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    2.5429    5.1394    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+  1  2  2  0  0  0\n\
+  2  3  1  0  0  0\n\
+  3  4  2  0  0  0\n\
+  4  5  1  0  0  0\n\
+  5  6  2  0  0  0\n\
+  6  1  1  0  0  0\n\
+  3  7  1  0  0  0\n\
+  7  8  1  0  0  0\n\
+  8  9  1  0  0  0\n\
+  9 10  1  0  0  0\n\
+ 10 11  1  0  0  0\n\
+ 11 12  1  0  0  0\n\
+ 12 13  2  0  0  0\n\
+ 13 14  1  0  0  0\n\
+ 14 15  2  0  0  0\n\
+ 15 16  1  0  0  0\n\
+ 16 17  2  0  0  0\n\
+ 17 12  1  0  0  0\n\
+M  CHG  1  15   9\n\
+M  END\n\
+$$$$\n"
+
+MOL2STROK = "\n\
+RDKit          2D\n\
 \n\
  11 11  0  0  0  0  0  0  0  0999 V2000\n\
    -0.3790    7.4663    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
@@ -58,12 +145,15 @@ class TestChemics(unittest.TestCase):
         self.assertEqual(66.38, round(pred, 2)) # TPSA
 
     def hidetestSingleAZO(self):
-        endpoint = "ADOI"
+        #endpoint = "ADOI"
         endpoint = "ADOI_Tox"
-        smiles = "OC1COc2ccccc2OCCOCCOc2ccccc2OC1"
+        smiles = "COc1cc(N=c2c(C#N)c[nH]c3cc(OCCCN4CCN(C)CC4)c(OC)cc23)c(Cl)cc1Cl"
+        #smiles = "Nc1cccc2c1CN(C1CCC(=O)NC1=O)C2=O"
+        #smiles = "OC1COc2ccccc2OCCOCCOc2ccccc2OC1"
         #smiles = "CCO"
         smiles = urllib.quote(smiles)
-        url = 'http://'+MYSERVER+'/prediction/'+endpoint+'/123/'+smiles+'/None/None'
+        url = MYSERVER+'prediction/'+endpoint+'/123/'+smiles+'/None/None'
+        #url = 'http://'+MYSERVER+'/prediction/'+endpoint+'/123/'+smiles+'/None/None'
         print url
         response = requests.get(url)
         print "Response from single molecule execution"
@@ -87,8 +177,10 @@ class TestChemics(unittest.TestCase):
         self.assertEqual("Aromatic_Amine", pred)
 
 
-    def testMol2smiles(self):
+    def hidetestMol2smiles(self):
         url = 'http://'+MYSERVER+'/mol2smiles'
+        print url
+        #MOL2STR = "errorstring"
         molDict = {"mol2": MOL2STR} 
         myData = json.dumps(molDict)
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
@@ -245,24 +337,27 @@ class TestChemics(unittest.TestCase):
         self.assertEqual(26.02, round(pred, 2))
 
     def startBatchJob(self, smilesDict, endpoint):
-        url = 'http://'+MYSERVER+'/startBatchPredictions/'+endpoint
+        #url = 'http://'+MYSERVER+'/startBatchPredictions/'+endpoint
+        url = MYSERVER+'startBatchPredictions/'+endpoint
         myData = json.dumps(smilesDict)
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         response = requests.post(url, data=myData, headers = headers)
         return json.loads(response.text)
 
     def getBatchJobResult(self, jobID):
-        url = 'http://'+MYSERVER+'/getBatchPredictions/'+jobID
+        #url = 'http://'+MYSERVER+'/getBatchPredictions/'+jobID
+        url = MYSERVER+'getBatchPredictions/'+jobID
         response = requests.get(url)
         return json.loads(response.text)
         #return response.text
 
     def getStatus(self, jobID):
-        url = 'http://'+MYSERVER+'/getStatus/'+jobID
+        #url = 'http://'+MYSERVER+'/getStatus/'+jobID
+        url = MYSERVER+'getStatus/'+jobID
         response = requests.get(url)
         return json.loads(response.text)
 
-    def hidetestBatchAsync(self):  # Using molecular names
+    def testBatchAsync(self):  # Using molecular names
          TIMEOUT = 200
          endpoint = "ADOI"
          #endpoint = "SA2D"

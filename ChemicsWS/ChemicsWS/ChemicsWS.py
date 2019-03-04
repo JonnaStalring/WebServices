@@ -4,6 +4,7 @@ from flask import request
 from flask import make_response
 from flask import jsonify
 from flask import json
+from molvs import validate_smiles
 import unicodedata 
 import logging
 import string
@@ -108,12 +109,52 @@ def D360endpoints():
 def mol2smiles():
     """
     """
-    mol2str = request.json
-    stringWithMolData = mol2str["mol2"]
-    stringWithMolData = unicodedata.normalize('NFKD', stringWithMolData).encode('ascii','ignore')
-    mol = Chem.MolFromMolBlock(stringWithMolData, strictParsing=False)
-    smiles = Chem.MolToSmiles(mol)
-    return smiles
+    try:
+    #if True:
+        mol2str = request.json
+        stringWithMolData = mol2str["mol2"]
+        stringWithMolData = unicodedata.normalize('NFKD', stringWithMolData).encode('ascii','ignore')
+        mol = Chem.MolFromMolBlock(stringWithMolData, strictParsing=False)
+        isOK = checkMol(mol)
+        if isOK:
+            smiles = Chem.MolToSmiles(mol)
+            return make_response(jsonify({"success": smiles}), 200)
+        else:
+            app.logger.error('Error converting from mol to smiles using RDKit')
+            return make_response(jsonify({"error": "The submitted structure cannot be interpreted"}), 200)
+    except: 
+        app.logger.error('Error converting from mol to smiles using RDKit')
+        return make_response(jsonify({"error": "The submitted structure cannot be interpreted"}), 200)
+
+def checkMol(mol):
+    isOK = True
+    try:
+        smiles = Chem.MolToSmiles(mol)
+        log = validate_smiles(smiles)
+        isOK = parseLog(log)
+    except:
+        isOK = False
+    return isOK
+
+def parseLog(log):
+    isOK = True
+    for elem in log:
+        if string.find(elem, "ERROR") != -1:
+            isOK = False
+        if string.find(elem, "Not an overall neutral system") != -1:
+            pcharge = ncharge = 0
+            idx = string.find(elem, "+")
+            if idx > 0: pcharge = int(elem[idx+1])
+            print pcharge
+            idx = string.find(elem, "-")
+            if idx > 0: ncharge = int(elem[idx+1])
+            print ncharge
+            if pcharge > ncharge: charge = pcharge
+            else: charge = ncharge
+            if charge > 4:
+                isOK = False
+                app.logger.error("Charge greater than 4 is rare in organic molecules")
+    return isOK
 
 
 def getSinglePred(endpoint, ID, smiles, project = "dummyProject", series = "dummySeries"):
@@ -263,8 +304,16 @@ def prediction(endpoint, ID, smiles, project, series):
                 idx = CONFIG.CHEMICSTIMEOUT + 1
                 JSONobj = jsonify(result)
     elif endpoint != "AllAPendpoints":
-        result, code = makePrediction(endpoint, ID, smiles, project, series)
-        JSONobj = jsonify(result)
+        idx = 0
+        while idx < CONFIG.CHEMICSTIMEOUT:
+            result, code = makePrediction(endpoint, ID, smiles, project, series)
+            if result["descStatus"] == CONFIG.ERRORCODE:
+                time.sleep(2)
+                idx = idx + 2
+                JSONobj = jsonify(result)
+            else:
+                idx = CONFIG.CHEMICSTIMEOUT + 2
+                JSONobj = jsonify(result)
     else:
         descStatus = "AllAPendpoints only exists for batch calculations. Please use batchPredictionsMV"
         JSONobj = jsonify(ID=ID, smiles=smiles, project=project, series=series, prediction="NaN", confidence="NaN", \
@@ -421,6 +470,7 @@ def predictMolList(molList, endpoint, APjobID = None):
                                 idx = CONFIG.CHEMICSTIMEOUT + 1
                                 status = CONFIG.ERRORCODE
                     else:
+                        #if True:
                         try:
                             prediction, confidence = getSinglePred(endpoint, ID, smiles, project, series)
                             status = CONFIG.FINISHEDCODE
@@ -462,7 +512,8 @@ def startBatchPredictions(endpoint):
     Predict multiple molecules asynchronous. API as in batchPredictions.
     """
     molList = request.json
-    APjobID = "jobID"+string.split(str(time.time()),".")[0]
+    #APjobID = "jobID"+string.split(str(time.time()),".")[0]
+    APjobID = "None"
     job = RQqueue.enqueue_call(func=predictMolList, args=(molList, endpoint, APjobID), result_ttl=5000)
     jobID = job.get_id()
     return make_response(jsonify(jobID=jobID, APjobID = APjobID), 200)
@@ -852,16 +903,17 @@ def getStatus(jobID):
 def jobCancellation(jobID, APjobID):
 
     try:
-        # Delete job from queue
         job = Job.fetch(jobID, connection=conn)
-        Job.cancel(job)
+        print "ID ", job.get_id()
+        Job.delete(job)
         JSONobj = jsonify(jobStatus = "Job cancelled")
+
         # Kill AP job  
-        APWS = os.environ["APWS"]
-        url = 'http://'+APWS+'/cancelBatchPredictions/'+APjobID
-        print "Kill the AP job on this url ", url
-        response = requests.get(url)
-        JSONobj = jsonify(jobStatus = "Job cancelled")
+        #APWS = os.environ["APWS"]
+        #url = 'http://'+APWS+'/cancelBatchPredictions/'+APjobID
+        #print "Kill the AP job on this url ", url
+        #response = requests.get(url)
+        #JSONobj = jsonify(jobStatus = "Job cancelled")
     except:
         JSONobj = jsonify(jobStatus = "Job could not be cancelled")
 
